@@ -8,6 +8,7 @@ import java.util.List;
 public class Demo {
 
     private static final int MAX_LENGTH = 10;
+    private static final String FIRST_PRE_BOX_HASH = "0";
     private static final String PRE_FIVE_NUMBERS = "00000";
 
     public static void main(String[] args) {
@@ -17,7 +18,7 @@ public class Demo {
 
     private static List<Box> initData() {
         List<Box> list = new ArrayList<>();
-        String preBoxHash = "0";
+        String preBoxHash = FIRST_PRE_BOX_HASH;
         for (int i = 1; i <= MAX_LENGTH; i++) {
             Box box = new Box();
             box.setId(i);

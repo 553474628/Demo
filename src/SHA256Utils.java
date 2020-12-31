@@ -13,6 +13,10 @@ public class SHA256Utils {
      * @return
      */
     public static String sha256Hex(byte[] bytes) {
+        if (bytes == null) {
+            return "";
+        }
+
         String encodeStr = "";
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
