@@ -23,10 +23,13 @@ public class Demo {
             box.setId(i);
             box.setTimestamp(System.currentTimeMillis());
             box.setPreBoxHash(preBoxHash);
+
             // 与神秘数字拼接成字符串，然后得到hash前5为都是数字0，也就是说得到的所有hash值前5位都是0
-            String hash = box.match();
+            String hash = box.matchIdAndTimeStampAndPreBoxHash();
+
             box.setMysticNumber(getMysticNumber(hash));
             box.setHash(hash);
+
             preBoxHash = hash;
             list.add(box);
         }
@@ -39,7 +42,7 @@ public class Demo {
             while (!str.startsWith(PRE_FIVE_NUMBERS)) {
                 str = str + index;
                 str = SHA256Utils.sha256Hex(str.getBytes("UTF-8"));
-                index ++;
+                index++;
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

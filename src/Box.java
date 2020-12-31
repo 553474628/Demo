@@ -52,9 +52,9 @@ public class Box {
     }
 
     /**
-     * 将宝箱编号、时间戳、上一个宝箱的Hash值
+     * 将宝箱编号、时间戳、上一个宝箱的Hash值组合起来
      */
-    public String match() {
+    public String matchIdAndTimeStampAndPreBoxHash() {
         return id + timestamp + preBoxHash;
     }
 }
