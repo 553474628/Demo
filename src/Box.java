@@ -3,20 +3,12 @@
  */
 public class Box {
     private int id;
-    private String timestamp;
+    private long timestamp;
     private String hash;
     private String preBoxHash;
     private int mysticNumber;
 
     public Box() {
-    }
-
-    public Box(int id, String timestamp, String hash, String preBoxHash, int mysticNumber) {
-        this.id = id;
-        this.timestamp = timestamp;
-        this.hash = hash;
-        this.preBoxHash = preBoxHash;
-        this.mysticNumber = mysticNumber;
     }
 
     public int getId() {
@@ -27,11 +19,11 @@ public class Box {
         this.id = id;
     }
 
-    public String getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -60,9 +52,9 @@ public class Box {
     }
 
     /**
-     * 将宝箱编号、时间戳、上一个宝箱的Hash值、神秘数字拼成一个字符串
+     * 将宝箱编号、时间戳、上一个宝箱的Hash值
      */
     public String match() {
-        return id + timestamp + preBoxHash + mysticNumber;
+        return id + timestamp + preBoxHash;
     }
 }

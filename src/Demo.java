@@ -1,3 +1,4 @@
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -5,34 +6,44 @@ import java.util.List;
  * @author chenbin
  */
 public class Demo {
-    public static void main(String[] args) {
 
+    private static final int MAX_LENGTH = 10;
+    private static final String PRE_FIVE_NUMBERS = "00000";
+
+    public static void main(String[] args) {
+        List<Box> boxes = initData();
+        boxes.forEach(box -> System.out.println(box.getMysticNumber()));
     }
 
-
-    /*考题：在一个房间里有10个神秘的宝箱，全部打开就能过关
-    宝箱有以下几个属性：宝箱编号、时间戳、Hash值、上一个宝箱的Hash值、神秘数字
-    宝箱属性说明：
-    宝箱编号：从1到10；
-    时间戳：当你尝试打开宝箱时，记录下时间；
-    Hash值：将宝箱编号、时间戳、上一个宝箱的Hash值、神秘数字拼成一个字符串，然后求字符串的Hash值，Hash统一采用sha256算法；
-    上一个宝箱的Hash值：上一个序号的宝箱的Hash值，1号宝箱的上一个宝箱的Hash值是0；
-    神秘数字：可以打开宝箱的神秘数字，是一个正整数；
-    宝箱开启规则：找到那个神秘数字，使得宝箱的Hash值的前5位都是数字0，宝箱即为开启状态
-    1.找到1-10号宝箱对应的神秘数字*/
-
-    private void initData() {
+    private static List<Box> initData() {
         List<Box> list = new ArrayList<>();
         String preBoxHash = "0";
-        for (int i = 1; i <= 10; i++) {
-            Box box = new Box(i, String.valueOf(System.currentTimeMillis()), "0", "0", 0);
+        for (int i = 1; i <= MAX_LENGTH; i++) {
+            Box box = new Box();
+            box.setId(i);
+            box.setTimestamp(System.currentTimeMillis());
             box.setPreBoxHash(preBoxHash);
-            box.setMysticNumber();
             // 与神秘数字拼接成字符串，然后得到hash前5为都是数字0，也就是说得到的所有hash值前5位都是0
             String hash = box.match();
+            box.setMysticNumber(getMysticNumber(hash));
             box.setHash(hash);
             preBoxHash = hash;
             list.add(box);
         }
+        return list;
+    }
+
+    private static int getMysticNumber(String str) {
+        int index = 0;
+        try {
+            while (!str.startsWith(PRE_FIVE_NUMBERS)) {
+                str = str + index;
+                str = SHA256Utils.sha256Hex(str.getBytes("UTF-8"));
+                index ++;
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return index;
     }
 }
